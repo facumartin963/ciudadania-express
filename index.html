@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciudadania.express - Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#005c99',
+                        success: '#28a745',
+                        danger: '#dc3545',
+                        spanish: {
+                            red: '#c60b1e',
+                            yellow: '#ffc400'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b-4 border-spanish-red">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-xl">🇪🇸</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Ciudadania.express</h1>
+                        <p class="text-sm text-gray-600">Tu camino hacia la nacionalidad española</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-gray-600">Demo Gratuito</p>
+                    <p class="text-xs text-primary font-semibold">5 preguntas oficiales</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="text-center">
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">¡Bienvenido al Simulador CCSE!</h2>
+                <p class="text-lg text-gray-600 mb-6">Practica con preguntas oficiales del examen de Conocimientos Constitucionales y Socioculturales de España</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <div class="text-2xl mb-2">📚</div>
+                        <h3 class="font-semibold text-gray-900">5 Preguntas</h3>
+                        <p class="text-sm text-gray-600">Seleccionadas del banco oficial</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <div class="text-2xl mb-2">⏱️</div>
+                        <h3 class="font-semibold text-gray-900">15 Minutos</h3>
+                        <p class="text-sm text-gray-600">Tiempo límite del examen real</p>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <div class="text-2xl mb-2">🎯</div>
+                        <h3 class="font-semibold text-gray-900">60% para Aprobar</h3>
+                        <p class="text-sm text-gray-600">Mismo criterio que el CCSE</p>
+                    </div>
+                </div>
+                
+                <button onclick="startTest()" class="bg-primary hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors">
+                    🚀 Comenzar Test Demo
+                </button>
+            </div>
+        </div>
+
+        <!-- Test Screen -->
+        <div id="test-screen" class="hidden">
+            <!-- Progress Bar -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <div class="flex justify-between items-center mb-4">
+                    <span id="question-counter" class="text-sm font-medium text-gray-600">Pregunta 1 de 5</span>
+                    <div class="flex items-center space-x-2 text-primary">
+                        <span>⏰</span>
+                        <span id="timer" class="font-mono font-bold">15:00</span>
+                    </div>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div id="progress-bar" class="bg-primary h-3 rounded-full transition-all duration-300" style="width: 20%"></div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 id="question-text" class="text-xl font-semibold text-gray-900 mb-8 leading-relaxed">
+                    <!-- Question will be loaded here -->
+                </h3>
+
+                <div id="options-container" class="space-y-4">
+                    <!-- Options will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden">
+            <div class="bg-white rounded-lg shadow-lg p-8 text-center">
+                <div id="result-icon" class="text-6xl mb-4">🎉</div>
+                <h2 id="result-title" class="text-3xl font-bold mb-4">¡APTO!</h2>
+                <div id="result-stats" class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Stats will be loaded here -->
+                </div>
+                <div class="space-y-4">
+                    <button onclick="showDetails()" class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold">
+                        Ver Respuestas Detalladas
+                    </button>
+                    <button onclick="restartTest()" class="bg-primary hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold ml-4">
+                        Repetir Test
+                    </button>
+                </div>
+            </div>
+
+            <!-- Detailed Results -->
+            <div id="detailed-results" class="hidden mt-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-6">Respuestas Detalladas</h3>
+                    <div id="questions-review" class="space-y-6">
+                        <!-- Detailed review will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Detectar entorno automáticamente
+        const API_BASE_URL = window.location.hostname === 'localhost' 
+            ? 'http://localhost:3001' 
+            : window.location.origin;
+        
+        let currentQuestion = 0;
+        let questions = [];
+        let answers = [];
+        let timeLeft = 900;
+        let timer;
+        let testResults = null;
+
+        async function startTest() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/tests/demo`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    questions = data.questions;
+                    answers = [];
+                    currentQuestion = 0;
+                    timeLeft = data.timeLimit;
+                    
+                    document.getElementById('welcome-screen').classList.add('hidden');
+                    document.getElementById('test-screen').classList.remove('hidden');
+                    
+                    startTimer();
+                    loadQuestion();
+                } else {
+                    alert('Error al cargar el test. Asegúrate de que el servidor esté ejecutándose.');
+                }
+            } catch (error) {
+                alert(`Error de conexión. Asegúrate de que el servidor esté ejecutándose en ${API_BASE_URL}`);
+                console.error('Error:', error);
+            }
+        }
+
+        async function finishTest() {
+            clearInterval(timer);
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/tests/submit`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        answers: answers,
+                        timeUsed: 900 - timeLeft
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    testResults = data.results;
+                    showResults();
+                } else {
+                    alert('Error al procesar resultados');
+                }
+            } catch (error) {
+                alert('Error de conexión al enviar resultados');
+                console.error('Error:', error);
+            }
+        }
+    </script>
+</body>
+</html>

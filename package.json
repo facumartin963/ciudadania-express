@@ -1,0 +1,17 @@
+{
+  "name": "ciudadania-express",
+  "version": "1.0.0",
+  "description": "Simulador inteligente para la nacionalidad española",
+  "main": "backend/server.js",
+  "scripts": {
+    "dev": "nodemon backend/server.js",
+    "start": "node backend/server.js",
+    "server": "node backend/server.js",
+    "client": "open index.html",
+    "build": "echo 'Build completed'",
+    "vercel-build": "echo 'Vercel build completed'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
